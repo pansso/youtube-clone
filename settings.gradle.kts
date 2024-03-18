@@ -15,4 +15,4 @@ dependencyResolutionManagement {
 
 rootProject.name = "youtube-clone"
 include(":app")
- 
+include(":build-logic")

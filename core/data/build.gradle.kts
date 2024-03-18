@@ -4,7 +4,7 @@ plugins {
 }
 
 android {
-    namespace = "com.example.data"
+    namespace = "com.youtubeclone.data"
     compileSdk = 33
 
     defaultConfig {

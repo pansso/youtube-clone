@@ -4,7 +4,7 @@ plugins {
 }
 
 android {
-    namespace = "com.example.domain"
+    namespace = "com.youtubeclone.domain"
     compileSdk = 33
 
     defaultConfig {

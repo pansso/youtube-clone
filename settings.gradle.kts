@@ -13,10 +13,15 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "youtube-clone"
+rootProject.name = "YoutubeClone"
 include(
     ":app",
     ":core:model",
     ":core:domain",
     ":core:data",
-    "core:navigation")
+    ":core:navigation",
+    ":feature:main"
+)
+include(":feature:shorts")
+include(":feature:subscriptions")
+include(":feature:library")

@@ -14,5 +14,9 @@ dependencyResolutionManagement {
 }
 
 rootProject.name = "youtube-clone"
-include(":app")
-include(":build-logic")
+include(
+    ":app",
+    ":core:model",
+    ":core:domain",
+    ":core:data",
+    "core:navigation")

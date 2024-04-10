@@ -22,8 +22,10 @@ android {
 
 dependencies {
 
+    implementation(Dep.Coil.coilCompose)
     Dep.androidList.forEach(::implementation)
     Dep.Compose.ComposeList.forEach(::implementation)
+    Dep.RactiveX.forEach(::implementation)
     implementation(Dep.Hilt.hilt)
     kapt(Dep.Hilt.compiler)
 

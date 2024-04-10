@@ -22,6 +22,8 @@ dependencies {
 
     Dep.androidList.forEach(::implementation)
     Dep.Compose.ComposeList.forEach(::implementation)
+    implementation(Dep.Coil.coilCompose)
+    implementation(Dep.Coil.coil)
 
     testImplementation("junit:junit:4.13.2")
 }

@@ -1,11 +1,11 @@
 package com.youtubeclone.buildsrc
 
-object Dep{
+object Dep {
 
     const val androidGradlePlugin = "com.android.tools.build:gradle:8.1.0"
     const val androidGradleApiPlugin = "com.android.tools.build:gradle-api:8.1.0"
 
-    object Andriod{
+    object Andriod {
         const val core = "androidx.core:core-ktx:1.10.1"
         const val appcompat = "androidx.appcompat:appcompat:1.6.1"
         const val activitiy = "androidx.activity:activity-ktx:1.7.2"
@@ -19,7 +19,7 @@ object Dep{
         "androidx.fragment:fragment-ktx:1.6.1"
     )
 
-    object LifeCycle{
+    object LifeCycle {
         private const val lifecycleVersion = "2.6.1"
 
         val LifeCycleList = listOf(
@@ -29,7 +29,7 @@ object Dep{
         )
     }
 
-    object Kotlin{
+    object Kotlin {
         private const val kotlinVersion = "1.9.0"
         private const val coroutineVersion = "1.7.3"
 
@@ -44,11 +44,11 @@ object Dep{
         )
     }
 
-    object Glide{
+    object Glide {
 
     }
 
-    object Retrofit{
+    object Retrofit {
         private const val retrofitVersion = "2.9.0"
 
         val RetrofitList = listOf(
@@ -60,7 +60,7 @@ object Dep{
 
     }
 
-    object Compose{
+    object Compose {
 
         val ComposeList = listOf(
             "androidx.compose.ui:ui:1.5.0",
@@ -76,10 +76,11 @@ object Dep{
 
     }
 
-    object Google{
+    object Google {
         const val gson = "com.google.code.gson:gson:2.8.6"
     }
-    object Hilt{
+
+    object Hilt {
         private const val hiltVersion = "2.50"
 
         const val hilt = "com.google.dagger:hilt-android:$hiltVersion"
@@ -87,7 +88,7 @@ object Dep{
         const val plugin = "com.google.dagger:hilt-android-gradle-plugin:$hiltVersion"
     }
 
-    object Flipper{
+    object Flipper {
         const val core = "com.facebook.flipper:flipper:0.249.0"
         const val soloader = "com.facebook.soloader:soloader:0.10.5"
         const val networkplugin = "com.facebook.flipper:flipper-network-plugin:0.249.0"
@@ -95,4 +96,19 @@ object Dep{
     }
 
     const val timber = "com.jakewharton.timber:timber:5.0.1"
+
+    object Coil {
+        private const val coilVersion = "2.6.0"
+
+        const val coil = "io.coil-kt:coil:${coilVersion}"
+        const val coilCompose = "io.coil-kt:coil-compose:$coilVersion"
+    }
+
+    val RactiveX  = listOf(
+        "io.reactivex.rxjava3:rxjava:3.1.8",
+        "io.reactivex.rxjava3:rxkotlin:3.0.1",
+        "io.reactivex.rxjava3:rxandroid:3.0.2"
+    )
+
+
 }

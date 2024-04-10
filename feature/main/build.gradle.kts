@@ -29,6 +29,7 @@ dependencies {
     implementation(project(":core:model"))
     implementation(project(":core:designsystem"))
 
+    implementation(Dep.Coil.coilCompose)
     Dep.androidList.forEach(::implementation)
     Dep.Compose.ComposeList.forEach(::implementation)
     implementation(Dep.Hilt.hilt)

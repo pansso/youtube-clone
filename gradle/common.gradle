@@ -1,4 +1,4 @@
-import com.youtubeclone.buildsrc.Versions
+import com.youtubeclone.buildsrc.*
 
 def hasLibraryPlugin = pluginManager.hasPlugin("com.android.library")
 def hasApplicationPlugin = pluginManager.hasPlugin("com.android.application")
@@ -24,5 +24,9 @@ if (hasApplicationPlugin || hasLibraryPlugin) {
         kotlinOptions {
             jvmTarget = Versions.javaVersion.toString()
         }
+    }
+
+    dependencies {
+        implementation(Dep.timber)
     }
 }

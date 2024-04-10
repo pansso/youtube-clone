@@ -7,8 +7,8 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navOptions
-import com.example.home.HomeScreen
-import com.example.library.LibraryScreen
+import com.youtubeclone.home.HomeScreen
+import com.youtubeclone.library.LibraryScreen
 import com.youtubeclone.shorts.ShortsScreen
 import com.youtubeclone.subscribe.SubscriptionsScreen
 

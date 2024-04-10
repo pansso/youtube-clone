@@ -24,9 +24,9 @@ if (hasApplicationPlugin || hasLibraryPlugin) {
         kotlinOptions {
             jvmTarget = Versions.javaVersion.toString()
         }
-    }
 
-    dependencies {
-        implementation(Dep.timber)
+        dependencies {
+            implementation(Dep.timber)
+        }
     }
 }

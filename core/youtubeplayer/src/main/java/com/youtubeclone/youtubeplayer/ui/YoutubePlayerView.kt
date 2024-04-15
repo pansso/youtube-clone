@@ -13,9 +13,11 @@ import androidx.compose.ui.viewinterop.AndroidView
 import androidx.lifecycle.Lifecycle.Event.*
 import androidx.lifecycle.LifecycleEventObserver
 import androidx.lifecycle.LifecycleOwner
+import androidx.lifecycle.lifecycleScope
 import kotlin.coroutines.resume
 import kotlin.coroutines.suspendCoroutine
 import com.youtubeclone.youtubeplayer.BuildConfig
+import kotlinx.coroutines.launch
 
 
 @SuppressLint("SetJavaScriptEnabled", "JavascriptInterface")
@@ -49,7 +51,7 @@ class YoutubePlayerView @JvmOverloads constructor(
      * @param seekTo 사용시 자동재생 설정됨
      * @param lifecycleOwner 사용시 stop 이후 동영상을 정지
      */
-    data class Builder(
+    class Builder(
         private val context: Context,
         private var videoId: String? = null,
         private var seekTo: Int? = 0,
@@ -120,13 +122,17 @@ class YoutubePlayerView @JvmOverloads constructor(
     fun getPlayerState(): Int? = eventHandler?.getPlayerState()
 
 
-    fun getCurrentTime(): Double? = eventHandler?.getCurrentTime()
+    fun getCurrentTime(): Long? = eventHandler?.getCurrentTime()
 
 
     fun play() = evaluateWebViewFunction("window.playVideo();")
 
-    fun pause() = evaluateWebViewFunction("window/pauseVideo();")
+    fun pause() = evaluateWebViewFunction("window.pauseVideo();")
 
+    fun release() {
+        this.stopLoading()
+        this.destroy()
+    }
 
     private fun evaluateWebViewFunction(
         script: String,

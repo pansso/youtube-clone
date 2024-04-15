@@ -4,7 +4,7 @@ import com.youtubeclone.youtubeplayer.ui.PlayerState
 
 class PlayerEventHandler(private val playerCallback: PlayerCallback?) {
     private var playerState: Int? = null
-    private var currentTime: Double? = null
+    private var currentTime: Long? = null
     private var duration: Double? = null
 
     @JavascriptInterface
@@ -15,7 +15,7 @@ class PlayerEventHandler(private val playerCallback: PlayerCallback?) {
 
     @JavascriptInterface
     fun setCurrentTime(time: Double) {
-        currentTime = time
+        currentTime = (time * 1000).toLong()
     }
 
     @JavascriptInterface
@@ -32,7 +32,7 @@ class PlayerEventHandler(private val playerCallback: PlayerCallback?) {
         return playerState
     }
 
-    fun getCurrentTime(): Double? {
+    fun getCurrentTime(): Long? {
         return currentTime
     }
 

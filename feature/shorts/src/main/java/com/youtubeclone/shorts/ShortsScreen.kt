@@ -17,8 +17,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.unit.dp
+import androidx.core.view.get
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleEventObserver
+import androidx.lifecycle.lifecycleScope
 import com.youtubeclone.designsystem.YoutubeBlack
 import com.youtubeclone.youtubeplayer.ui.PlayBackState
 import com.youtubeclone.youtubeplayer.ui.PlayerCallback
@@ -33,7 +35,7 @@ import kotlinx.coroutines.launch
 @Composable
 fun ShortsScreen() {
     val playerState = remember { mutableStateOf<String>("") }
-    val currentTime = remember { mutableStateOf<Double?>(0.0) }
+    val currentTime = remember { mutableStateOf<Long?>(0) }
     val context = LocalContext.current
     val lifecycleOwner = LocalLifecycleOwner.current
     var job: Job? = null
@@ -56,13 +58,12 @@ fun ShortsScreen() {
                     }
 
                     PlayBackState.STATE_PLAYING.state -> {
-
                         playerState.value = PlayBackState.STATE_PLAYING.getName
 
-                        job = CoroutineScope(Dispatchers.Default).launch {
-                            customYoutubePlayer?.let {
-                                while (isActive) {
-                                    currentTime.value = it.getCurrentTime()
+                        job = lifecycleOwner.lifecycleScope.launch(Dispatchers.Default) {
+                            customYoutubePlayer?.let { youtubePlayer ->
+                                repeat(Int.MAX_VALUE) {
+                                    currentTime.value = youtubePlayer.getCurrentTime()
                                     delay(200)
                                 }
                             }
@@ -92,8 +93,12 @@ fun ShortsScreen() {
     DisposableEffect(key1 = lifecycleOwner) {
         val observer = LifecycleEventObserver { _, event ->
             when (event) {
-                Lifecycle.Event.ON_PAUSE, Lifecycle.Event.ON_STOP, Lifecycle.Event.ON_DESTROY -> {
+                Lifecycle.Event.ON_PAUSE, Lifecycle.Event.ON_STOP -> {
                     job?.cancel()
+                }
+                Lifecycle.Event.ON_DESTROY -> {
+                    job?.cancel()
+                    customYoutubePlayer?.release()
                 }
 
                 else -> {}

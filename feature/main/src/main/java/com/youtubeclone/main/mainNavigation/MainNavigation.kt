@@ -17,7 +17,7 @@ internal class MainNavigator(
 ) {
     @Composable
     fun MainNavigation(
-        paddingValues: PaddingValues
+        padding: PaddingValues
     ) {
         NavHost(
             navController = navController,
@@ -26,25 +26,25 @@ internal class MainNavigator(
             composable(
                 route = MainScreenRoute.HOME.route
             ) {
-                HomeScreen()
+                HomeScreen(padding)
             }
 
             composable(
                 route = MainScreenRoute.SHORTS.route
             ) {
-                ShortsScreen()
+                ShortsScreen(padding)
             }
 
             composable(
                 route = MainScreenRoute.LIBRARY.route
             ) {
-                LibraryScreen()
+                LibraryScreen(padding)
             }
 
             composable(
                 route = MainScreenRoute.SUBSCRIPTIONS.route
             ) {
-                SubscriptionsScreen()
+                SubscriptionsScreen(padding)
             }
         }
     }

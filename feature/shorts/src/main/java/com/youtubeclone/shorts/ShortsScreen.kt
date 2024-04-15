@@ -2,11 +2,13 @@ package com.youtubeclone.shorts
 
 
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Button
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -33,7 +35,7 @@ import kotlinx.coroutines.isActive
 import kotlinx.coroutines.launch
 
 @Composable
-fun ShortsScreen() {
+fun ShortsScreen(padding: PaddingValues) {
     val playerState = remember { mutableStateOf<String>("") }
     val currentTime = remember { mutableStateOf<Long?>(0) }
     val context = LocalContext.current
@@ -120,7 +122,7 @@ fun ShortsScreen() {
             .build()
     }
 
-    Column(modifier = Modifier.fillMaxSize()) {
+    Column(modifier = Modifier.padding(padding).fillMaxSize()) {
         Column(
             modifier = Modifier
                 .fillMaxWidth()

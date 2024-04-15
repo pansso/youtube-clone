@@ -4,9 +4,11 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.navigationBarsPadding
@@ -21,8 +23,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
+import coil.compose.AsyncImage
 import com.youtubeclone.designsystem.Black
 import com.youtubeclone.designsystem.White
+import com.youtubeclone.designsystem.YoutubeBlack
 import com.youtubeclone.designsystem.YoutubeRed
 
 @Composable
@@ -53,26 +57,23 @@ private fun RowScope.MainBottomTabItem(
 ) {
     Box(
         modifier = Modifier
+            .weight(1f)
+            .fillMaxHeight()
             .clickable(onClick = { onClick() }),
         contentAlignment = Alignment.Center,
     ) {
-        Row(
-            verticalAlignment = Alignment.CenterVertically,
-            modifier = Modifier.background(if (selected) YoutubeRed else White)
+        Column(
+            horizontalAlignment = Alignment.CenterHorizontally,
         ) {
-//            Icon(
-//                painter = painterResource(tab.resource),
-//                contentDescription = tab.text,
-//                tint = if (selected) {
-//                    //todo
-//                    // dark theme 일때는 반대로되야함
-//                    // shorts일때는 강제로 darkTheme로 적용
-//                    Black
-//                } else {
-//                    White
-//                }
-//            )
-            Spacer(modifier = Modifier.width(8.dp))
+            Icon(
+                painter = painterResource(tab.resource),
+                contentDescription = tab.text,
+                tint = if (selected) {
+                    Black
+                } else {
+                    MaterialTheme.colorScheme.outlineVariant
+                }
+            )
             Text(text = tab.text)
         }
 

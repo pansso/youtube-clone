@@ -2,6 +2,7 @@ package com.youtubeclone.main.mainNavigation
 
 import androidx.annotation.DrawableRes
 import androidx.compose.runtime.Stable
+import com.youtubeclone.designsystem.R
 import javax.annotation.concurrent.Immutable
 
 /**
@@ -18,32 +19,31 @@ data class MainTabs(
     val route: String
 ) {
     companion object {
-        //todo resource asset
         @Stable
         internal val BottomHome: MainTabs = MainTabs(
             "Home",
-            0,
+            resource = R.drawable.baseline_home_24,
             MainScreenRoute.HOME.route
         )
 
         @Stable
         internal val BottomShorts: MainTabs = MainTabs(
             "Shots",
-            0,
+            R.drawable.baseline_flash_on_24,
             MainScreenRoute.SHORTS.route
         )
 
         @Stable
         internal val BottomSubscriptions: MainTabs = MainTabs(
             "Subscriptions",
-            0,
+            R.drawable.baseline_subscriptions_24,
             MainScreenRoute.SUBSCRIPTIONS.route
         )
 
         @Stable
         internal val BottomLibrary: MainTabs = MainTabs(
             "Library",
-            0,
+            R.drawable.baseline_video_library_24,
             MainScreenRoute.LIBRARY.route
         )
     }

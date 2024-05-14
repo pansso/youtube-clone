@@ -1,6 +1,12 @@
-package com.example.common
+package com.youtubeclone.common
 
 import android.app.Notification
+import io.reactivex.rxjava3.core.Observable
+import io.reactivex.rxjava3.core.ObservableOnSubscribe
+import io.reactivex.rxjava3.core.Scheduler
+import io.reactivex.rxjava3.core.Single
+import io.reactivex.rxjava3.disposables.Disposable
+import io.reactivex.rxjava3.schedulers.Schedulers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.map
@@ -16,6 +22,15 @@ sealed interface Result<out T> {
 fun <T> Flow<T>.asResult(): Flow<Result<T>> = map<T, Result<T>> { Result.Success(it) }
     .onStart { emit(Result.Loading) }
     .catch { emit(Result.Error(it)) }
+
+fun <T : Any> Observable<T>.asResult(): Disposable {
+    return this
+        .map<Result<T>> { Result.Success(it) }
+        .doOnSubscribe{ it->
+            Result.Loading
+        }
+        .onErrorReturn { Result.Error(it) }.subscribe()
+}
 
 val Result<*>.Success
     get() = this is Result.Success && data != null

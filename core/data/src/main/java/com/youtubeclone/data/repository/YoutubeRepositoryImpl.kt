@@ -9,7 +9,7 @@ import javax.inject.Inject
 internal class YoutubeRepositoryImpl @Inject constructor(
     private val youtubeApi: YoutubeApi,
 ) : YoutubeRepository{
-    override suspend fun getVideos(q: String, videoDuration: String): YoutubeData {
-        return youtubeApi.getVideos(q = q, videoDuration = videoDuration).toData()
+    override suspend fun getVideos(q: String): YoutubeData {
+        return youtubeApi.getVideos(q = q).toData()
     }
 }

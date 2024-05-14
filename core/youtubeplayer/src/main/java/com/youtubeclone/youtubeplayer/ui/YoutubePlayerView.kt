@@ -1,9 +1,10 @@
 package com.youtubeclone.youtubeplayer.ui
 
-import PlayerEventHandler
 import android.annotation.SuppressLint
 import android.content.Context
+import android.graphics.Color
 import android.util.AttributeSet
+import android.view.MotionEvent
 import android.view.ViewGroup
 import android.webkit.WebChromeClient
 import android.webkit.WebView
@@ -29,7 +30,7 @@ class YoutubePlayerView @JvmOverloads constructor(
     /***********************
      * 초기 설정
      ***********************/
-    private var eventHandler: PlayerEventHandler? = null
+    private val eventHandler: PlayerEventHandler = PlayerEventHandler()
 
     init {
         layoutParams = ViewGroup.LayoutParams(
@@ -39,10 +40,13 @@ class YoutubePlayerView @JvmOverloads constructor(
         settings.javaScriptEnabled = true
         settings.loadWithOverviewMode = true
         settings.useWideViewPort = true
+        settings.allowContentAccess = true
+        settings.allowFileAccess = true
         settings.mediaPlaybackRequiresUserGesture = false
         if (!BuildConfig.DEBUG) {
             setWebContentsDebuggingEnabled(true)
         }
+        this.setBackgroundColor(Color.BLACK)
         webChromeClient = WebChromeClient()
     }
 
@@ -72,17 +76,27 @@ class YoutubePlayerView @JvmOverloads constructor(
             val videoId = videoId
             requireNotNull(videoId) { "video Id가 없습니다." }
             val player = YoutubePlayerView(context, null, 0).apply {
-                initialize(
-                    videoId = videoId,
-                    seekTo = seekTo,
-                    autoPlay = autoPlay,
-                    lifecycleOwner = lifecycleOwner
-                )
-                eventHandler = PlayerEventHandler(playerCallback)
-                addJavascriptInterface(eventHandler!!, "playerEventHandler")
+                load(videoId, seekTo, autoPlay, playerCallback, lifecycleOwner)
             }
             return player
         }
+    }
+
+    fun load(
+        videoId: String,
+        seekTo: Int? = 0,
+        autoPlay: Boolean = false,
+        playerCallback: PlayerCallback? = null,
+        lifecycleOwner: LifecycleOwner? = null
+    ) {
+        initialize(
+            videoId = videoId,
+            seekTo = seekTo,
+            autoPlay = autoPlay,
+            lifecycleOwner = lifecycleOwner
+        )
+        eventHandler.setPlayerCallback(playerCallback)
+        addJavascriptInterface(eventHandler, "playerEventHandler")
     }
 
     private fun initialize(
@@ -92,13 +106,17 @@ class YoutubePlayerView @JvmOverloads constructor(
         lifecycleOwner: LifecycleOwner?
     ) {
         val htmlData = getHTMLData(videoId, seekTo, autoPlay)
-        loadDataWithBaseURL("https://www.youtube.com", htmlData, "text/html", "UTF-8", null)
+        loadData(htmlData, "text/html", "UTF-8")
 
         lifecycleOwner?.let {
             val observer = LifecycleEventObserver { _, event ->
                 when (event) {
                     ON_STOP -> {
                         pause()
+                    }
+
+                    ON_DESTROY -> {
+                        release()
                     }
 
                     else -> Unit
@@ -119,15 +137,17 @@ class YoutubePlayerView @JvmOverloads constructor(
      ***********************/
     private fun setCurrentTime() = evaluateWebViewFunction("window.getCurrentTime();")
 
-    fun getPlayerState(): Int? = eventHandler?.getPlayerState()
+    fun getPlayerState(): Int? = eventHandler.getPlayerState()
 
 
-    fun getCurrentTime(): Long? = eventHandler?.getCurrentTime()
+    fun getCurrentTime(): Long? = eventHandler.getCurrentTime()
 
 
     fun play() = evaluateWebViewFunction("window.playVideo();")
 
     fun pause() = evaluateWebViewFunction("window.pauseVideo();")
+
+    fun isPlaying(): Boolean = eventHandler.isPlaying()
 
     fun release() {
         this.stopLoading()
@@ -168,13 +188,13 @@ class YoutubePlayerView @JvmOverloads constructor(
         seekTo: Int?,
         autoPlay: Boolean,
     ): String {
-        return """"
+        return """
         <html>
-            <body">
-               <div id="player"></div>
+            <body>
+               <div id="player" style="pointer-events: none;"></div>
                 <script>
                     var player;
-                    var interval
+                    var interval;
                     function onYouTubeIframeAPIReady() {
                         player = new YT.Player('player', {
                             height: '100%',
@@ -197,13 +217,9 @@ class YoutubePlayerView @JvmOverloads constructor(
                     }
                     
                     function onPlayerStateChange(event) {
-                    
                          playerEventHandler.onPlayerStateChange(event.data);
-                         
                          if (event.data == YT.PlayerState.PLAYING) {
-
                             clearInterval(interval);
-
                             interval = setInterval(function() {
                                 getCurrentTime();
                             }, 200);
@@ -226,7 +242,7 @@ class YoutubePlayerView @JvmOverloads constructor(
                     function seekTo(time) {
                         player.seekTo(time, true);
                     }
-                      function playVideo() {
+                    function playVideo() {
                         player.playVideo();
                     }
                     function pauseVideo() {
@@ -236,6 +252,10 @@ class YoutubePlayerView @JvmOverloads constructor(
                 <script src="https://www.youtube.com/iframe_api"></script>
             </body>
         </html>
-    """".trimIndent()
+    """.trimIndent()
+    }
+
+    override fun onInterceptTouchEvent(ev: MotionEvent?): Boolean {
+        return true
     }
 }

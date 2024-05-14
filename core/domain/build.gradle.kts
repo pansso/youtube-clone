@@ -11,6 +11,7 @@ android {
 
 dependencies {
     implementation(project(":core:data"))
+    implementation(project(":core:common"))
     implementation(project(":core:model"))
 
     implementation(com.youtubeclone.buildsrc.Dep.Hilt.hilt)

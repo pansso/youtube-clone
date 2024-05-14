@@ -16,7 +16,16 @@ class AppInitProvider : InitProvider() {
     }
 
     private fun initTimber() {
-        Timber.plant(Timber.DebugTree())
+        // Timber Initialize
+        if (BuildConfig.DEBUG) {
+            // Timber Initialize
+            Timber.uprootAll()
+            Timber.plant(object : Timber.DebugTree() {
+                override fun createStackElementTag(element: StackTraceElement): String {
+                    val threadName = Thread.currentThread().name
+                    return "(${element.fileName}:${element.lineNumber})"
+                }
+            })
+        }
     }
-
 }

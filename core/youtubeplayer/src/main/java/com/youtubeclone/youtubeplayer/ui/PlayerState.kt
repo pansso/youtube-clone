@@ -11,7 +11,7 @@ import androidx.annotation.IntDef
     PlayerState.BUFFERING,
     PlayerState.CUED
 )
-internal annotation class PlayerState {
+annotation class PlayerState {
     companion object {
         const val IDLE = -1
         const val ENDED = 0

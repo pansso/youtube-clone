@@ -12,6 +12,7 @@ android {
 
     buildFeatures {
         dataBinding = true
+        viewBinding = true
         compose = true
     }
 
@@ -22,7 +23,11 @@ android {
 
 dependencies {
     implementation(project(":core:designsystem"))
+    implementation(project(":core:model"))
     implementation(project(":core:youtubeplayer"))
+    implementation(project(":core:domain"))
+    implementation(project(":core:common"))
+    implementation(Dep.Coil.coil)
 
     Dep.androidList.forEach(::implementation)
     Dep.Compose.ComposeList.forEach(::implementation)

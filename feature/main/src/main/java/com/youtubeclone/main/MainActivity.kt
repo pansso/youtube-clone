@@ -1,30 +1,69 @@
 package com.youtubeclone.main
 
+import android.content.Intent
 import android.os.Bundle
-import android.os.PersistableBundle
-import androidx.activity.ComponentActivity
+import android.view.View
 import androidx.activity.compose.setContent
 import androidx.appcompat.app.AppCompatActivity
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Surface
-import androidx.compose.material3.Text
-import androidx.compose.runtime.rememberCoroutineScope
-import androidx.compose.ui.Modifier
+import androidx.fragment.app.Fragment
 import androidx.navigation.compose.rememberNavController
+import com.youtubeclone.home.HomeFragment
+import com.youtubeclone.main.databinding.ActivityMainBinding
+import com.youtubeclone.shorts.ShortsActivity
+import com.youtubeclone.shorts.ShortsFragment
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 
+    private val binding: ActivityMainBinding by lazy { ActivityMainBinding.inflate(layoutInflater) }
+
+    private val bottomNavView by lazy { binding.bottomNavView }
+    private val topBar by lazy { binding.topBar }
+
+    private fun showTopBar() {
+        topBar.visibility = View.VISIBLE
+    }
+    private fun hideTopBar() {
+        topBar.visibility = View.GONE
+    }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        setContentView(binding.root)
+        bottomNavView.setOnItemSelectedListener { item ->
+            when (item.itemId) {
+                R.id.homeMenuItem -> {
+                    replaceFragment(HomeFragment())
+                    true
+                }
+                R.id.shortsMenuItem -> {
+                    replaceFragment(ShortsFragment())
+                    true
+                }
+                R.id.subscriptionsMenuItem -> true
+                R.id.libraryMenuItem -> true
+                else -> false
+            }
 
-        initView()
+        }
+
+        replaceFragment(HomeFragment())
     }
 
-    private fun initView(){
+    private fun replaceFragment(fragment: Fragment) {
+        supportFragmentManager
+            .beginTransaction()
+            .replace(R.id.fragmentContainer, fragment)
+            .commit()
+
+        if (fragment is ShortsFragment){
+            hideTopBar()
+        } else {
+            showTopBar()
+        }
+    }
+
+    private fun initView() {
 
         setContent {
             val navigator = rememberNavController()

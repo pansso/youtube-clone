@@ -11,7 +11,7 @@ internal interface YoutubeApi {
         @Query("q") q : String,  //검색할 키워드
         @Query("maxResult") maxResult : Int = 10,
         @Query("type") type : String = "video",
-        @Query("videoDuration") videoDuration : String,
+        @Query("videoEmbeddable") videoEmbeddable : String = "true",
         @Query("key") key: String =  BuildConfig.YOUTUBE_API_KEY,
     ) : YoutubeDataResponse
 

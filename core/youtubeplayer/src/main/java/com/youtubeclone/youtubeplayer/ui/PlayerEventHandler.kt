@@ -1,31 +1,48 @@
-import android.webkit.JavascriptInterface
-import com.youtubeclone.youtubeplayer.ui.PlayerCallback
-import com.youtubeclone.youtubeplayer.ui.PlayerState
+package com.youtubeclone.youtubeplayer.ui
 
-class PlayerEventHandler(private val playerCallback: PlayerCallback?) {
+import android.os.Handler
+import android.os.Looper
+import android.webkit.JavascriptInterface
+
+class PlayerEventHandler {
     private var playerState: Int? = null
     private var currentTime: Long? = null
     private var duration: Double? = null
+    private var isPlaying: Boolean = false
+    private var playerCallback: PlayerCallback? = null
 
     @JavascriptInterface
     fun onPlayerStateChange(@PlayerState state: Int) {
-        playerState = state
-        playerCallback?.onPlayerStateChange(state)
+        Handler(Looper.getMainLooper()).post {
+            playerState = state
+            isPlaying = state == PlayerState.PLAYING
+            playerCallback?.onPlayerStateChange(state)
+        }
     }
 
     @JavascriptInterface
     fun setCurrentTime(time: Double) {
-        currentTime = (time * 1000).toLong()
+        Handler(Looper.getMainLooper()).post {
+            currentTime = (time * 1000).toLong()
+        }
     }
 
     @JavascriptInterface
     fun setDuration(duration: Double) {
-        this.duration = duration
+        Handler(Looper.getMainLooper()).post {
+            this.duration = duration
+        }
     }
 
     @JavascriptInterface
     fun onPlayerStateReady() {
-        playerCallback?.onPlayerReady()
+        Handler(Looper.getMainLooper()).post {
+            playerCallback?.onPlayerReady()
+        }
+    }
+
+    fun setPlayerCallback(callback: PlayerCallback?) {
+        playerCallback = callback
     }
 
     fun getPlayerState(): Int? {
@@ -38,5 +55,9 @@ class PlayerEventHandler(private val playerCallback: PlayerCallback?) {
 
     fun getDuration(): Double? {
         return duration
+    }
+
+    fun isPlaying(): Boolean {
+        return isPlaying
     }
 }

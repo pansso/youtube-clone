@@ -23,6 +23,7 @@ include(
     ":core:navigation",
     ":core:designsystem",
     ":core:youtubeplayer",
+    ":core:common",
 
     ":feature:main",
     ":feature:home",

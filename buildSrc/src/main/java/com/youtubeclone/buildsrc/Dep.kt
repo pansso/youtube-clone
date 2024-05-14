@@ -16,7 +16,9 @@ object Dep {
         "androidx.core:core-ktx:1.10.1",
         "androidx.appcompat:appcompat:1.6.1",
         "androidx.activity:activity-ktx:1.7.2",
-        "androidx.fragment:fragment-ktx:1.6.1"
+        "androidx.fragment:fragment-ktx:1.6.1",
+        "androidx.recyclerview:recyclerview:1.3.2",
+        "com.google.android.material:material:1.6.1"
     )
 
     object LifeCycle {

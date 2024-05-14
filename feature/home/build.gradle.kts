@@ -22,6 +22,7 @@ android {
 
 dependencies {
     implementation(project(":core:designsystem"))
+    implementation(project(":core:common"))
 
     implementation(Dep.Coil.coilCompose)
     Dep.androidList.forEach(::implementation)

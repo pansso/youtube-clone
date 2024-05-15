@@ -1,6 +1,8 @@
-package com.youtubeclone.data.datasource.remote
+package com.youtubeclone.data.datasource
 
 import com.youtubeclone.data.api.YoutubeApi
+import com.youtubeclone.data.repository.SearchHistoryRepository
+import com.youtubeclone.data.repository.SearchHistoryRepositoryImpl
 import com.youtubeclone.data.repository.YoutubeRepository
 import com.youtubeclone.data.repository.YoutubeRepositoryImpl
 import dagger.Binds
@@ -20,5 +22,10 @@ internal abstract class DataModule {
     abstract fun bindsYoutubeRepository(
         repositoryImpl: YoutubeRepositoryImpl
     ) : YoutubeRepository
+
+    @Binds
+    abstract fun bindSearchHistoryRepository(
+        repositoryImpl: SearchHistoryRepositoryImpl
+    ) : SearchHistoryRepository
 
 }

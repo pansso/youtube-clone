@@ -106,11 +106,22 @@ object Dep {
         const val coilCompose = "io.coil-kt:coil-compose:$coilVersion"
     }
 
-    val RactiveX  = listOf(
+    val RactiveX = listOf(
         "io.reactivex.rxjava3:rxjava:3.1.8",
         "io.reactivex.rxjava3:rxkotlin:3.0.1",
         "io.reactivex.rxjava3:rxandroid:3.0.2"
     )
+
+    object Room {
+        private const val roomVersion = "2.5.0"
+
+        const val compiler = "androidx.room:room-compiler:$roomVersion"
+
+        val RoomList = listOf(
+            "androidx.room:room-runtime:$roomVersion",
+            "androidx.room:room-ktx:$roomVersion"
+        )
+    }
 
 
 }

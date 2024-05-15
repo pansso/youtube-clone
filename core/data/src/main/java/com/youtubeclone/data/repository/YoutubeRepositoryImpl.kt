@@ -4,6 +4,8 @@ import com.youtubeclone.data.api.YoutubeApi
 import com.youtubeclone.data.model.YoutubeDataResponse
 import com.youtubeclone.data.model.mapper.toData
 import com.youtubeclone.model.YoutubeData
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flow
 import javax.inject.Inject
 
 internal class YoutubeRepositoryImpl @Inject constructor(
@@ -11,5 +13,10 @@ internal class YoutubeRepositoryImpl @Inject constructor(
 ) : YoutubeRepository{
     override suspend fun getVideos(q: String): YoutubeData {
         return youtubeApi.getVideos(q = q).toData()
+    }
+
+    override suspend fun getSearchSuggestions(q: String): Flow<List<String?>?> {
+        val data = youtubeApi.getVideos(q = q).toData()
+        return flow { emit(data.items?.map { it?.snippet?.title }) }
     }
 }

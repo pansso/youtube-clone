@@ -29,5 +29,6 @@ include(
     ":feature:home",
     ":feature:shorts",
     ":feature:subscriptions",
-    ":feature:library"
+    ":feature:library",
+    ":feature:search"
 )

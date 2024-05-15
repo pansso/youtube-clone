@@ -25,6 +25,7 @@ dependencies {
     implementation(project(":feature:library"))
     implementation(project(":feature:shorts"))
     implementation(project(":feature:subscriptions"))
+    implementation(project(":feature:search"))
     implementation(project(":core:domain"))
     implementation(project(":core:model"))
     implementation(project(":core:common"))

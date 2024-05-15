@@ -31,4 +31,9 @@ dependencies {
     Dep.Retrofit.RetrofitList.forEach(::implementation)
     implementation(Dep.Hilt.hilt)
     kapt(Dep.Hilt.compiler)
+
+    kapt(Dep.Room.compiler)
+    Dep.Room.RoomList.forEach(::api)
+
+
 }

@@ -57,6 +57,7 @@ object Dep {
             "com.squareup.retrofit2:retrofit:$retrofitVersion",
             "com.squareup.retrofit2:converter-gson:$retrofitVersion",
             "com.squareup.retrofit2:converter-scalars:$retrofitVersion",
+            "com.squareup.retrofit2:adapter-rxjava3:$retrofitVersion",
             "com.squareup.okhttp3:logging-interceptor:3.9.1"
         )
 

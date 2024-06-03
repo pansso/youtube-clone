@@ -1,6 +1,7 @@
 package com.youtubeclone.common
 
 import android.app.Notification
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.core.ObservableOnSubscribe
 import io.reactivex.rxjava3.core.Scheduler
@@ -29,7 +30,8 @@ fun <T : Any> Observable<T>.asResult(): Disposable {
         .doOnSubscribe{ it->
             Result.Loading
         }
-        .onErrorReturn { Result.Error(it) }.subscribe()
+        .onErrorReturn { Result.Error(it) }
+        .subscribe()
 }
 
 val Result<*>.Success

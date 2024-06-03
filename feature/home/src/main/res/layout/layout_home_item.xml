@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    
+    <data>
+        <variable
+            name="item"
+            type="com.youtubeclone.model.YoutubePopularVideosData.Item" />
+    </data>
+
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingBottom="24dp">
+
+        <ImageView
+            android:id="@+id/videoThumbnail"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:scaleType="centerCrop"
+            android:adjustViewBounds="true"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:imageUrl="@{item.snippet.thumbnails.medium.url}"
+            tools:srcCompat="@tools:sample/avatars" />
+
+        <ImageView
+            android:id="@+id/channelPicture"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/videoThumbnail"
+            app:circleImage="@{item.snippet.thumbnails.medium.url}"/>
+
+        <TextView
+            android:id="@+id/videoTitle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:textAlignment="textStart"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:maxLines="2"
+            android:ellipsize="end"
+            app:layout_constraintStart_toEndOf="@+id/channelPicture"
+            app:layout_constraintTop_toTopOf="@+id/channelPicture"
+            app:setText="@{item.snippet.title}"
+            tools:text="videoTitle" />
+
+        <TextView
+            android:id="@+id/channelName"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:textSize="12sp"
+            android:textAlignment="textStart"
+            app:layout_constraintStart_toStartOf="@+id/videoTitle"
+            app:layout_constraintTop_toBottomOf="@+id/videoTitle"
+            app:setText="@{item.snippet.channelTitle}"
+            tools:text="TextView" />
+
+<!--        <ImageView-->
+<!--            android:id="@+id/separator1"-->
+<!--            android:layout_width="2dp"-->
+<!--            android:layout_height="2dp"-->
+<!--            android:layout_marginStart="8dp"-->
+<!--            app:layout_constraintBottom_toBottomOf="@+id/channelName"-->
+<!--            app:layout_constraintStart_toEndOf="@+id/channelName"-->
+<!--            app:layout_constraintTop_toTopOf="@+id/channelName"/>-->
+
+        <TextView
+            android:id="@+id/views"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="6dp"
+            android:textSize="12sp"
+            android:textAlignment="textStart"
+            app:layout_constraintBottom_toBottomOf="@+id/channelName"
+            app:layout_constraintStart_toEndOf="@id/channelName"
+            app:layout_constraintTop_toTopOf="@+id/channelName"
+            app:viewsCount="@{item.statistics.viewCount}"
+            tools:text="TextView" />
+
+
+        <TextView
+            android:id="@+id/publishedTime"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:layout_marginStart="6dp"
+            android:textSize="12sp"
+            android:textAlignment="textStart"
+            app:layout_constraintBottom_toBottomOf="@+id/views"
+            app:layout_constraintStart_toEndOf="@+id/views"
+            app:layout_constraintTop_toTopOf="@+id/views"
+            app:publishedDay="@{item.snippet.publishedAt}"
+            tools:text="TextView" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

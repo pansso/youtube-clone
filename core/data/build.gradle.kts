@@ -31,7 +31,7 @@ dependencies {
     Dep.Retrofit.RetrofitList.forEach(::implementation)
     implementation(Dep.Hilt.hilt)
     kapt(Dep.Hilt.compiler)
-
+    Dep.RactiveX.forEach(::implementation)
     kapt(Dep.Room.compiler)
     Dep.Room.RoomList.forEach(::api)
 

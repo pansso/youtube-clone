@@ -1,5 +1,7 @@
 package com.youtubeclone.model
 
+import kotlinx.serialization.Serializable
+
 
 data class YoutubeItem(
     val etag: String?,
@@ -28,13 +30,13 @@ data class Snippet(
     val title: String?
 )
 
-
+@Serializable
 data class Thumbnails(
     val default: Size?,
     val high: Size?,
     val medium: Size?
 )
-
+@Serializable
 data class Size(
     val height: Int?,
     val url: String?,

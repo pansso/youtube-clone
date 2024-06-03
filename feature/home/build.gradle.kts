@@ -22,6 +22,8 @@ android {
 
 dependencies {
     implementation(project(":core:designsystem"))
+    implementation(project(":core:model"))
+    implementation(project(":core:domain"))
     implementation(project(":core:common"))
 
     implementation(Dep.Coil.coilCompose)
@@ -30,6 +32,7 @@ dependencies {
     Dep.RactiveX.forEach(::implementation)
     implementation(Dep.Hilt.hilt)
     kapt(Dep.Hilt.compiler)
+    implementation(Dep.Kotlin.serializationJson)
 
     testImplementation("junit:junit:4.13.2")
 }

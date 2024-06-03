@@ -20,6 +20,7 @@ dependencies {
     Dep.Kotlin.CoroutineList.forEach(::implementation)
     Dep.RactiveX.forEach(::implementation)
     Dep.androidList.forEach(::implementation)
+    implementation(Dep.Kotlin.serializationJson)
 
     testImplementation("junit:junit:4.13.2")
 }

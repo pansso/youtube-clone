@@ -13,7 +13,7 @@ dependencies {
     implementation(project(":core:data"))
     implementation(project(":core:common"))
     implementation(project(":core:model"))
-
+    com.youtubeclone.buildsrc.Dep.RactiveX.forEach(::implementation)
     implementation(com.youtubeclone.buildsrc.Dep.Hilt.hilt)
     kapt(com.youtubeclone.buildsrc.Dep.Hilt.compiler)
     testImplementation("junit:junit:4.13.2")

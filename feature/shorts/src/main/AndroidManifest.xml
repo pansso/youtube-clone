@@ -4,13 +4,6 @@
     <application
         android:allowBackup="false"
         android:usesCleartextTraffic="false">
-
-        <activity android:name=".ShortsActivity"
-            android:configChanges="uiMode"
-            android:allowBackup="false"
-            android:theme="@style/Theme.AppCompat.NoActionBar">
-
-        </activity>
     </application>
 
 </manifest>

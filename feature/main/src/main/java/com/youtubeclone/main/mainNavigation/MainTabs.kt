@@ -22,28 +22,28 @@ data class MainTabs(
         @Stable
         internal val BottomHome: MainTabs = MainTabs(
             "Home",
-            resource = R.drawable.baseline_home_24,
+            resource = R.drawable.home_icon,
             MainScreenRoute.HOME.route
         )
 
         @Stable
         internal val BottomShorts: MainTabs = MainTabs(
             "Shots",
-            R.drawable.baseline_flash_on_24,
+            R.drawable.shorts_icon,
             MainScreenRoute.SHORTS.route
         )
 
         @Stable
         internal val BottomSubscriptions: MainTabs = MainTabs(
             "Subscriptions",
-            R.drawable.baseline_subscriptions_24,
+            R.drawable.subscriptions_icon,
             MainScreenRoute.SUBSCRIPTIONS.route
         )
 
         @Stable
         internal val BottomLibrary: MainTabs = MainTabs(
             "Library",
-            R.drawable.baseline_video_library_24,
+            R.drawable.library_icon,
             MainScreenRoute.LIBRARY.route
         )
     }

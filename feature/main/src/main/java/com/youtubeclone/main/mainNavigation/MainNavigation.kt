@@ -9,7 +9,6 @@ import androidx.navigation.compose.composable
 import androidx.navigation.navOptions
 import com.youtubeclone.home.HomeScreen
 import com.youtubeclone.library.LibraryScreen
-import com.youtubeclone.shorts.ShortsScreen
 import com.youtubeclone.subscribe.SubscriptionsScreen
 
 internal class MainNavigator(
@@ -32,7 +31,6 @@ internal class MainNavigator(
             composable(
                 route = MainScreenRoute.SHORTS.route
             ) {
-                ShortsScreen(padding)
             }
 
             composable(

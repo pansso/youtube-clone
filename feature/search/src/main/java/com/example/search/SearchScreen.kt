@@ -55,7 +55,8 @@ fun SearchScreen(
         SearchTopBar(
             searchText = searchText,
             onSearchTextChanged = { viewModel.updateSearchText(it) },
-            onBackPress = {})
+            onBackPress = {},
+            search = { viewModel.search(searchText) })
         SearchList(
             searchHistory = searchHistory,
             suggestions = suggestions,
@@ -68,7 +69,8 @@ fun SearchScreen(
 fun SearchTopBar(
     searchText: String,
     onSearchTextChanged: (String) -> Unit,
-    onBackPress: () -> Unit
+    onBackPress: () -> Unit,
+    search: () -> Unit,
 ) {
     val keyboardController = LocalSoftwareKeyboardController.current
 
@@ -80,7 +82,7 @@ fun SearchTopBar(
             value = searchText,
             onValueChange = onSearchTextChanged,
             modifier = Modifier
-                .fillMaxWidth()
+                .weight(1f)
                 .padding(end = 8.dp),
             singleLine = true,
             placeholder = { Text("Search...") },
@@ -95,6 +97,9 @@ fun SearchTopBar(
                 }
             )
         )
+        IconButton(onClick = { /*TODO*/ }) {
+            Icon(Icons.Filled.Search, contentDescription = "search")
+        }
     }
 }
 
@@ -164,7 +169,8 @@ fun preview() {
         SearchTopBar(
             searchText = "asddfv 토피넛라떼 검색해보기 테스트페이지1234123412341234123412341234123412341234123412341234",
             onSearchTextChanged = {},
-            onBackPress = {})
+            onBackPress = {},
+            search = {})
         SearchList(
             searchHistory = listOf("1번기록", "2번기록기록", "3번기록기기기"),
             suggestions = listOf("추천1", "추천리스트2", "추천3"),

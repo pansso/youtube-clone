@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <item name="cloneToolbar" type="id" />
+    <item name="youtubeToolBar" type="id"/>
+    <item name="publishMenuItem" type="id" />
+</resources>

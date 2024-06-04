@@ -16,7 +16,6 @@ import com.youtubeclone.common.BaseFragment
 import com.youtubeclone.model.YoutubeItem
 import com.youtubeclone.shorts.adapter.ShortsAdapter
 import com.youtubeclone.shorts.adapter.ShortsInterface
-import com.youtubeclone.shorts.databinding.ActivityShortsBinding
 import com.youtubeclone.shorts.databinding.FragmentShortsBinding
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.Flow

@@ -1,22 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android">
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
         android:id="@+id/homeMenuItem"
-        android:icon="@drawable/baseline_home_24"
+        android:icon="@drawable/home_icon"
         android:title="Home"/>
 
     <item
         android:id="@+id/shortsMenuItem"
-        android:icon="@drawable/baseline_flash_on_24"
+        android:icon="@drawable/shorts_icon"
         android:title="Shorts"/>
 
     <item
+        android:id="@+id/publishMenuItem"
+        android:icon="@drawable/publish_icon"
+        android:title=""/>
+
+    <item
         android:id="@+id/subscriptionsMenuItem"
-        android:icon="@drawable/baseline_subscriptions_24"
+        android:icon="@drawable/subscriptions_icon"
         android:title="Subscriptions"/>
 
     <item
         android:id="@+id/libraryMenuItem"
-        android:icon="@drawable/baseline_video_library_24"
+        android:icon="@drawable/library_icon"
         android:title="Library"/>
 </menu>

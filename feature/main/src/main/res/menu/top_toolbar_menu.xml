@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/castItem"
+        android:icon="@drawable/cast_icon"
+        android:enabled="true"
+        app:showAsAction="always"
+        android:title="cast"/>
+
+    <item
+        android:id="@+id/notificationItem"
+        android:icon="@drawable/notification_icon"
+        app:showAsAction="always"
+        android:title="notification"/>
+
+    <item
+        android:id="@+id/searchItem"
+        android:icon="@drawable/search_icon"
+        app:showAsAction="always"
+        android:title="search"/>
+
+    <item
+        android:id="@+id/accountItem"
+        android:icon="@drawable/baseline_account_circle_24"
+        app:showAsAction="always"
+        android:title="account"/>
+
+</menu>

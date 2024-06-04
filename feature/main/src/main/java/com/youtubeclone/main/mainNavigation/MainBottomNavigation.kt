@@ -25,9 +25,6 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import com.youtubeclone.designsystem.Black
-import com.youtubeclone.designsystem.White
-import com.youtubeclone.designsystem.YoutubeBlack
-import com.youtubeclone.designsystem.YoutubeRed
 
 @Composable
 internal fun MainBottomNavigation(

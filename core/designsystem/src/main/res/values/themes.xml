@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="Theme.Youtubeclone" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+    </style>
+
+    <style name="YoutubeBottomNavStyle" parent="Widget.MaterialComponents.BottomNavigationView.Colored">
+        <item name="backgroundTint">#000000</item> <!-- 배경색 검정 -->
+        <item name="itemIconTint">@color/bottom_nav_item_color</item> <!-- 아이템 아이콘 색상 -->
+        <item name="itemTextColor">@color/bottom_nav_item_color</item> <!-- 아이템 텍스트 색상 -->
+        <item name="itemRippleColor">@color/bottom_nav_ripple_color</item> <!-- 아이템 클릭 리플 색상 -->
+    </style>
+
+
+</resources>

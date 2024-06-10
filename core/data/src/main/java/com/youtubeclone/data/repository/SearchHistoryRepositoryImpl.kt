@@ -16,8 +16,15 @@ internal class SearchHistoryRepositoryImpl @Inject constructor(
         }
     }
 
+//    override fun getSearchHistory(keyword: String): Flow<List<String>> {
+//        return searchHistoryDAO.getSearchHistory(keyword = keyword)
+//    }
 
-    override fun getSearchHistory(keyword: String): Flow<List<String>> {
-        return searchHistoryDAO.getSearchHistory(keyword = keyword)
+    override fun getAllSearchHistory(): Flow<List<String>> {
+        return searchHistoryDAO.getAllSearchHistory()
+    }
+
+    override fun deleteSearchHistory(text: String) {
+        return searchHistoryDAO.deleteSearchHistory(text)
     }
 }

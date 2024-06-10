@@ -1,5 +1,8 @@
 package com.example.search
 
+import android.app.Activity
+import androidx.activity.addCallback
+import androidx.activity.compose.LocalOnBackPressedDispatcherOwner
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
@@ -28,11 +31,16 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.focus.FocusRequester
+import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.input.ImeAction
@@ -42,6 +50,8 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.youtubeclone.designsystem.White
+import timber.log.Timber
 
 @Composable
 fun SearchScreen(
@@ -50,13 +60,16 @@ fun SearchScreen(
     val searchText by viewModel.searchText.collectAsState()
     val suggestions by viewModel.suggestions.collectAsState()
     val searchHistory by viewModel.searchHistory.collectAsState()
+    val backDispatcher = LocalOnBackPressedDispatcherOwner.current?.onBackPressedDispatcher
 
-    Column {
+    Column(modifier = Modifier.fillMaxSize()) {
         SearchTopBar(
             searchText = searchText,
             onSearchTextChanged = { viewModel.updateSearchText(it) },
-            onBackPress = {},
-            search = { viewModel.search(searchText) })
+            onBackPress = {
+               backDispatcher?.onBackPressed()
+            },
+            onSearchClick = { viewModel.search(it) })
         SearchList(
             searchHistory = searchHistory,
             suggestions = suggestions,
@@ -70,9 +83,15 @@ fun SearchTopBar(
     searchText: String,
     onSearchTextChanged: (String) -> Unit,
     onBackPress: () -> Unit,
-    search: () -> Unit,
+    onSearchClick: (String) -> Unit
 ) {
+    val focusRequester = remember { FocusRequester() }
     val keyboardController = LocalSoftwareKeyboardController.current
+
+    LaunchedEffect(Unit){
+        focusRequester.requestFocus()
+        keyboardController?.show()
+    }
 
     Row(modifier = Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically) {
         IconButton(onClick = onBackPress) {
@@ -82,8 +101,9 @@ fun SearchTopBar(
             value = searchText,
             onValueChange = onSearchTextChanged,
             modifier = Modifier
-                .weight(1f)
-                .padding(end = 8.dp),
+                .fillMaxWidth()
+                .padding(end = 8.dp)
+                .focusRequester(focusRequester),
             singleLine = true,
             placeholder = { Text("Search...") },
             shape = RoundedCornerShape(8.dp),
@@ -93,13 +113,10 @@ fun SearchTopBar(
             keyboardActions = KeyboardActions(
                 onSearch = {
                     keyboardController?.hide()
-                    //todo 검색이벤트
+                    onSearchClick(searchText)
                 }
             )
         )
-        IconButton(onClick = { /*TODO*/ }) {
-            Icon(Icons.Filled.Search, contentDescription = "search")
-        }
     }
 }
 
@@ -116,7 +133,11 @@ fun SearchList(
                 searchHistory[history]?.let {
                     Row(
                         modifier = Modifier
-                            .clickable { searchHistory[history]?.let { it -> onSuggestionClicked(it) } },
+                            .clickable {
+                                searchHistory[history]?.let { it ->
+                                    onSuggestionClicked(it)
+                                }
+                            },
                         verticalAlignment = Alignment.CenterVertically
                     ) {
                         Icon(Icons.Filled.ThumbUp, contentDescription = "searchHistoryIcon")
@@ -127,7 +148,8 @@ fun SearchList(
                                 .fillMaxWidth()
                                 .padding(8.dp),
                             maxLines = 1,
-                            overflow = TextOverflow.Ellipsis
+                            overflow = TextOverflow.Ellipsis,
+                            color = White
                         )
                     }
                 }
@@ -151,7 +173,8 @@ fun SearchList(
                                 .fillMaxWidth()
                                 .padding(8.dp),
                             maxLines = 1,
-                            overflow = TextOverflow.Ellipsis
+                            overflow = TextOverflow.Ellipsis,
+                            color = White
                         )
                     }
                     HorizontalDivider()
@@ -170,7 +193,7 @@ fun preview() {
             searchText = "asddfv 토피넛라떼 검색해보기 테스트페이지1234123412341234123412341234123412341234123412341234",
             onSearchTextChanged = {},
             onBackPress = {},
-            search = {})
+            onSearchClick = {})
         SearchList(
             searchHistory = listOf("1번기록", "2번기록기록", "3번기록기기기"),
             suggestions = listOf("추천1", "추천리스트2", "추천3"),

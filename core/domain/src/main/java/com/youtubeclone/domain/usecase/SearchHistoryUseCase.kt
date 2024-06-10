@@ -9,11 +9,19 @@ import javax.inject.Inject
 class SearchHistoryUseCase @Inject constructor(
     private val searchHistoryRepository: SearchHistoryRepository
 ) {
-    fun getSearchHistory(keyword: String): Flow<List<String>> {
-        return searchHistoryRepository.getSearchHistory(keyword = keyword)
-    }
+//    fun getSearchHistory(keyword: String): Flow<List<String>> {
+//        return searchHistoryRepository.getSearchHistory(keyword = keyword)
+//    }
 
     suspend fun saveSearchHistory(text: String) {
         return searchHistoryRepository.saveSearchHistory(text = text)
+    }
+
+    fun getAllSearchHistory() : Flow<List<String>> {
+        return searchHistoryRepository.getAllSearchHistory()
+    }
+
+    fun deleteSearchHistory(text:String) {
+        searchHistoryRepository.deleteSearchHistory(text)
     }
 }

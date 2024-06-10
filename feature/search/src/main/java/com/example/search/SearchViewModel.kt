@@ -5,6 +5,7 @@ import androidx.lifecycle.viewModelScope
 import com.youtubeclone.domain.usecase.GetSearchSuggestionsUseCase
 import com.youtubeclone.domain.usecase.SearchHistoryUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -12,11 +13,17 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.conflate
 import kotlinx.coroutines.flow.debounce
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.filter
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.flatMapLatest
+import kotlinx.coroutines.flow.flowOn
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
+import timber.log.Timber
 import javax.inject.Inject
 
 @HiltViewModel
@@ -53,6 +60,38 @@ class SearchViewModel @Inject constructor(
 
     @OptIn(FlowPreview::class, ExperimentalCoroutinesApi::class)
     private fun debounceSearchText() {
+
+        //검색기록
+        viewModelScope.launch {
+            searchText
+                .flatMapLatest { text ->
+                    searchHistoryUseCase.getAllSearchHistory()
+                        .map { originList ->
+                            //텍스트가 포함된 아이템리스트
+                            val containsList = originList.filter { it ->
+                                it.contains(text, ignoreCase = true)
+                            }
+
+                            //포함된 리스트중 검색값으로 시작하는 아이템들
+                            val startedList = containsList.filter {
+                                it.startsWith(text, ignoreCase = true)
+                            }
+
+                            val remainingList = containsList - startedList.toSet()
+
+                            (startedList + remainingList).distinct().take(5)
+                        }
+                }
+                .flowOn(Dispatchers.Default)
+                .catch { e ->
+                    Timber.e(e, "Failed to get search history")
+                }
+                .collect { sortedList ->
+                    _searchHistory.value = sortedList
+                }
+        }
+
+        //api 검색 결과
         viewModelScope.launch {
             searchText
                 .debounce(300)
@@ -60,30 +99,31 @@ class SearchViewModel @Inject constructor(
                 .flatMapLatest { it ->
                     getSearchSuggestionsUseCase(it)
                 }.catch {
-                    // todo error catch event
+                    Timber.e("suggestions error data = ${it.localizedMessage}")
                 }
                 .collect {
                     _suggestions.value = it
                 }
-
-            searchText
-                .flatMapLatest { it ->
-                    searchHistoryUseCase.getSearchHistory(it)
-                }.catch {
-
-                }.collect { searchList ->
-                    _searchHistory.value = searchList
-                }
-
         }
     }
 
     fun search(text: String) {
-        viewModelScope.launch {
-            //todo Search Api logic
-            searchHistoryUseCase.saveSearchHistory(text)
-        }
+        saveSearchHistory(text)
     }
 
+    private fun saveSearchHistory(text: String) {
+        viewModelScope.launch(Dispatchers.IO) {
+            searchHistoryUseCase.getAllSearchHistory()
+                .firstOrNull()
+                ?.let { list ->
+                    val duplicateItem = list.find { it == text }
+                    if (duplicateItem != null) {
+                        searchHistoryUseCase.deleteSearchHistory(duplicateItem)
+                    }
+                    searchHistoryUseCase.saveSearchHistory(text)
+                }
+        }
+
+    }
 
 }

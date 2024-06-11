@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:tools="http://schemas.android.com/tools"
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
-    
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
     <data>
+
         <variable
             name="item"
             type="com.youtubeclone.model.YoutubePopularVideosData.Item" />
@@ -11,6 +12,7 @@
 
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/videoItem"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingBottom="24dp">
@@ -19,12 +21,12 @@
             android:id="@+id/videoThumbnail"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:scaleType="centerCrop"
             android:adjustViewBounds="true"
+            android:scaleType="centerCrop"
+            app:imageUrl="@{item.snippet.thumbnails.medium.url}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:imageUrl="@{item.snippet.thumbnails.medium.url}"
             tools:srcCompat="@tools:sample/avatars" />
 
         <ImageView
@@ -33,20 +35,20 @@
             android:layout_height="40dp"
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
+            app:circleImage="@{item.snippet.thumbnails.medium.url}"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/videoThumbnail"
-            app:circleImage="@{item.snippet.thumbnails.medium.url}"/>
+            app:layout_constraintTop_toBottomOf="@+id/videoThumbnail" />
 
         <TextView
             android:id="@+id/videoTitle"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
+            android:ellipsize="end"
+            android:maxLines="2"
             android:textAlignment="textStart"
             android:textSize="16sp"
             android:textStyle="bold"
-            android:maxLines="2"
-            android:ellipsize="end"
             app:layout_constraintStart_toEndOf="@+id/channelPicture"
             app:layout_constraintTop_toTopOf="@+id/channelPicture"
             app:setText="@{item.snippet.title}"
@@ -57,29 +59,29 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="4dp"
-            android:textSize="12sp"
             android:textAlignment="textStart"
+            android:textSize="12sp"
             app:layout_constraintStart_toStartOf="@+id/videoTitle"
             app:layout_constraintTop_toBottomOf="@+id/videoTitle"
             app:setText="@{item.snippet.channelTitle}"
             tools:text="TextView" />
 
-<!--        <ImageView-->
-<!--            android:id="@+id/separator1"-->
-<!--            android:layout_width="2dp"-->
-<!--            android:layout_height="2dp"-->
-<!--            android:layout_marginStart="8dp"-->
-<!--            app:layout_constraintBottom_toBottomOf="@+id/channelName"-->
-<!--            app:layout_constraintStart_toEndOf="@+id/channelName"-->
-<!--            app:layout_constraintTop_toTopOf="@+id/channelName"/>-->
+        <!--        <ImageView-->
+        <!--            android:id="@+id/separator1"-->
+        <!--            android:layout_width="2dp"-->
+        <!--            android:layout_height="2dp"-->
+        <!--            android:layout_marginStart="8dp"-->
+        <!--            app:layout_constraintBottom_toBottomOf="@+id/channelName"-->
+        <!--            app:layout_constraintStart_toEndOf="@+id/channelName"-->
+        <!--            app:layout_constraintTop_toTopOf="@+id/channelName"/>-->
 
         <TextView
             android:id="@+id/views"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="6dp"
-            android:textSize="12sp"
             android:textAlignment="textStart"
+            android:textSize="12sp"
             app:layout_constraintBottom_toBottomOf="@+id/channelName"
             app:layout_constraintStart_toEndOf="@id/channelName"
             app:layout_constraintTop_toTopOf="@+id/channelName"
@@ -92,8 +94,8 @@
             android:layout_width="wrap_content"
             android:layout_height="0dp"
             android:layout_marginStart="6dp"
-            android:textSize="12sp"
             android:textAlignment="textStart"
+            android:textSize="12sp"
             app:layout_constraintBottom_toBottomOf="@+id/views"
             app:layout_constraintStart_toEndOf="@+id/views"
             app:layout_constraintTop_toTopOf="@+id/views"

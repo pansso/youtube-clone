@@ -7,7 +7,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.youtubeclone.common.BaseFragment
 import com.youtubeclone.home.databinding.FragmentHomeBinding
-import com.youtubeclone.model.YoutubePopularVideosData
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -42,6 +41,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
                 is HomeUiState.Success -> {
                     homeAdapter.submitList(it.youtubeData.items)
                 }
+
                 is HomeUiState.Error<*> -> {}
             }
         }

@@ -10,7 +10,8 @@ data class YoutubePopularVideosData(
     @Serializable
     data class Item(
         val snippet: Snippet?,
-        val statistics: Statistics?
+        val statistics: Statistics?,
+        val id: String?
     ) {
         @Serializable
         data class Snippet(
@@ -23,6 +24,7 @@ data class YoutubePopularVideosData(
             val thumbnails: Thumbnails?,
             val title: String?
         )
+
         @Serializable
         data class Statistics(
             val commentCount: String?,

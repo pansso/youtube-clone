@@ -12,6 +12,7 @@ internal fun YoutubePopularVideosResponse.Item.toData(): YoutubePopularVideosDat
     YoutubePopularVideosData.Item(
         snippet = snippet?.toData(),
         statistics = statistics?.toData(),
+        id = id
     )
 
 internal fun YoutubePopularVideosResponse.Item.Snippet.toData(): YoutubePopularVideosData.Item.Snippet =

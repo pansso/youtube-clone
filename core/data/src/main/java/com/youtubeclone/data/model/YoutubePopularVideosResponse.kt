@@ -14,7 +14,9 @@ data class YoutubePopularVideosResponse(
         @SerialName("snippet")
         val snippet: Snippet?,
         @SerialName("statistics")
-        val statistics: Statistics?
+        val statistics: Statistics?,
+        @SerialName("id")
+        val id: String?
     ) {
         @Serializable
         data class Snippet(
